@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personal Care Recommender</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            text-align: center;
+        }
+
+        select, input, button {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Personal Care Recommender</h2>
+
+    <form method="POST">
+
+        <!-- AGE -->
+        <input type="number" name="age" placeholder="Enter Age" required>
+
+        <!-- CHOICE -->
+        <select name="choice" onchange="showOptions(this.value)" required>
+            <option value="">Select Type</option>
+            <option value="face">Skin Care</option>
+            <option value="hair">Hair Care</option>
+        </select>
+
+        <!-- FACE -->
+        <div id="faceDiv" style="display:none;">
+            <select name="skin">
+                <option value="dry">Dry</option>
+                <option value="oily">Oily</option>
+                <option value="normal">Normal</option>
+                <option value="combination">Combination</option>
+                <option value="sensitive">Sensitive</option>
+            </select>
+        </div>
+
+        <!-- HAIR -->
+        <div id="hairDiv" style="display:none;">
+            <select name="hair">
+                <option value="straight">Straight</option>
+                <option value="wavy">Wavy</option>
+                <option value="curly">Curly</option>
+                <option value="coily">Coily</option>
+            </select>
+        </div>
+
+        <button type="submit">Get Recommendation</button>
+
+    </form>
+
+    {% if result %}
+    <h3>Recommendations:</h3>
+    <ul>
+        {% for key, value in result.items() %}
+            <li><b>{{ key }}</b>: {{ value | join(', ') }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</div>
+
+<script>
+function showOptions(value) {
+    document.getElementById("faceDiv").style.display = "none";
+    document.getElementById("hairDiv").style.display = "none";
+
+    if (value === "face") {
+        document.getElementById("faceDiv").style.display = "block";
+    } else if (value === "hair") {
+        document.getElementById("hairDiv").style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
